@@ -5,6 +5,7 @@
 struct VulkanContext
 {
 	vk::Instance instance;
+	vk::PhysicalDevice physicalDevice;
 };
 
 auto SetupInstanceAndDevices(VulkanContext& _context) -> int
@@ -37,6 +38,30 @@ auto SetupInstanceAndDevices(VulkanContext& _context) -> int
 
 	vk::InstanceCreateInfo instanceInfo({}, &appInfo, 0, VK_NULL_HANDLE, static_cast<uint32_t>(extensions.size()), extensions.data());
 	_context.instance = vk::createInstance(instanceInfo);
+
+	std::cout << "Instance created" << std::endl;
+
+	// -------
+	
+	auto physicalDevices = _context.instance.enumeratePhysicalDevices();
+
+	if(physicalDevices.empty())
+	{
+		std::cerr << "No physical device available" << std::endl;
+		return -1;
+	}
+
+	for(const auto& physicalDevice : physicalDevices)
+	{
+		auto properties = physicalDevice.getProperties();
+
+		if(properties.deviceType == vk::PhysicalDeviceType::eDiscreteGpu)
+		{
+			_context.physicalDevice = physicalDevice;
+			std::cout << std::format("Selected {}", std::string(properties.deviceName.data())) << std::endl;
+			break;
+		}
+	}
 
 	return 0;
 }
