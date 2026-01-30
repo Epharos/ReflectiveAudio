@@ -1,12 +1,47 @@
 #include <iostream>
-#include <vector>
+#include <optional>
 #include <vulkan/vulkan.hpp>
+
+struct QueueFamilyIndices
+{
+	std::optional<uint32_t> graphicsFamily;
+	std::optional<uint32_t> presentFamily;
+	std::optional<uint32_t> computeFamily;
+
+	bool IsFullComplete() const
+	{
+		return IsGraphicsComplete() && IsComputeComplete() && IsPresentComplete();
+	}
+
+	bool IsGeneralComplete() const
+	{
+		return IsGraphicsComplete() && IsPresentComplete();
+	}
+
+	bool IsGraphicsComplete() const
+	{
+		return graphicsFamily.has_value();
+	}
+
+	bool IsComputeComplete() const
+	{
+		return computeFamily.has_value();
+	}
+
+	bool IsPresentComplete() const
+	{
+		return presentFamily.has_value();
+	}
+};
 
 struct VulkanContext
 {
 	vk::Instance instance;
 	vk::PhysicalDevice physicalDevice;
+	QueueFamilyIndices queueFamilyIndices;
+	vk::Device device;
 };
+
 
 auto SetupInstanceAndDevices(VulkanContext& _context) -> int
 {
@@ -62,6 +97,44 @@ auto SetupInstanceAndDevices(VulkanContext& _context) -> int
 			break;
 		}
 	}
+
+	//
+	
+	QueueFamilyIndices indices;
+
+	auto queueFamilies = _context.physicalDevice.getQueueFamilyProperties();
+
+	int i = 0;
+	for (const auto& queueFamily : queueFamilies)
+	{
+		if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics)
+		{
+			indices.graphicsFamily = i;
+			indices.presentFamily = i; // We can assume that graphics family can also present
+		}
+
+		if (queueFamily.queueFlags & vk::QueueFlagBits::eCompute)
+		{
+			indices.computeFamily = i;
+		}
+
+		if (indices.IsFullComplete())
+		{
+			break;
+		}
+
+		i++;
+	}
+
+	if(!indices.IsFullComplete())
+	{
+		std::cerr << "Physical device does not support Graphics, Present and Compute queue" << std::endl;
+		return -1;
+	}
+
+	_context.queueFamilyIndices = indices;
+
+	std::cout << std::format("Selected queue families [G: {}, P: {}, C: {}]", indices.graphicsFamily.value(), indices.presentFamily.value(), indices.computeFamily.value()) << std::endl;
 
 	return 0;
 }
