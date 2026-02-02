@@ -27,4 +27,5 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glfw)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(Runtime)
