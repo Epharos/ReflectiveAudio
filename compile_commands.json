@@ -1,0 +1,8 @@
+[
+{
+  "directory": "C:/Projects/DWYW_Physics_Audio/build",
+  "command": "C:\\mingw64\\bin\\c++.exe -IC:/Projects/DWYW_Physics_Audio/Runtime/src -IC:/Projects/DWYW_Physics_Audio/build/_deps/glfw-src/include -isystem C:/VulkanSDK/1.4.335.0/include -std=gnu++20 -fmodules-ts -fmodule-mapper=Runtime\\CMakeFiles\\Runtime.dir\\main.cpp.obj.modmap -MD -fdeps-format=p1689r5 -x c++ -o Runtime\\CMakeFiles\\Runtime.dir\\main.cpp.obj -c C:\\Projects\\DWYW_Physics_Audio\\Runtime\\main.cpp",
+  "file": "C:/Projects/DWYW_Physics_Audio/Runtime/main.cpp",
+  "output": "C:/Projects/DWYW_Physics_Audio/build/Runtime/CMakeFiles/Runtime.dir/main.cpp.obj"
+}
+]

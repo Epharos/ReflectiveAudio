@@ -1,5 +1,6 @@
 add_executable(Runtime
 	"main.cpp"
+	"setup.cpp"
 )
 
 target_include_directories(Runtime

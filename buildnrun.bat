@@ -1,2 +1,2 @@
 cmake --build build
-build\Runtime\Debug\Runtime.exe
+build\Runtime\Runtime.exe

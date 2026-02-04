@@ -1,0 +1,32 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "C:/Projects/DWYW_Physics_Audio/Runtime",
+	"dir-cur-src" : "C:/Projects/DWYW_Physics_Audio/Runtime",
+	"dir-top-bld" : "C:/Projects/DWYW_Physics_Audio",
+	"dir-top-src" : "C:/Projects/DWYW_Physics_Audio",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"Runtime\\src",
+		"_deps\\glfw-src\\include",
+		"C:\\VulkanSDK\\1.4.335.0\\include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "C:/Projects/DWYW_Physics_Audio/Runtime/CMakeFiles/Runtime.dir",
+	"sources" : 
+	{
+		"Runtime/CMakeFiles/Runtime.dir/main.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Projects/DWYW_Physics_Audio/Runtime/main.cpp"
+		}
+	}
+}
