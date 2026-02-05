@@ -197,3 +197,52 @@ auto VulkanContext::CreateDevice() -> void
 
 	std::cout << "Created device" << std::endl;
 }
+
+auto VulkanContext::CreateDebugMessenger() -> void
+{
+		dynamicLoader = vk::detail::DispatchLoaderDynamic(instance, vkGetInstanceProcAddr);
+
+		vk::DebugUtilsMessengerCreateInfoEXT debugMessengerInfo(
+				vk::DebugUtilsMessengerCreateFlagsEXT(),
+				vk::DebugUtilsMessageSeverityFlagBitsEXT::eError |
+				vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
+				vk::DebugUtilsMessageSeverityFlagBitsEXT::eInfo,
+				vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
+				vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation |
+				vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance,
+				DebugLayerCallback, nullptr);
+
+		debugMessenger = instance.createDebugUtilsMessengerEXT(debugMessengerInfo, nullptr, dynamicLoader);
+}
+
+VKAPI_ATTR vk::Bool32 VKAPI_PTR VulkanContext::DebugLayerCallback(
+				vk::DebugUtilsMessageSeverityFlagBitsEXT _messageSeverity,
+				vk::DebugUtilsMessageTypeFlagsEXT _messageType,
+				const vk::DebugUtilsMessengerCallbackDataEXT* _callbackData,
+				void* _userData
+		)
+{
+	std::string message = "";
+	if(_messageType & vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral)
+		message += "GENERAL: ";
+	else if (_messageType & vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation)
+		message += "VALIDATION: ";
+	else if (_messageType & vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance)
+		message += "PERFORMANCE: ";
+
+	message += _callbackData->pMessage;
+
+	switch (_messageSeverity)
+	{
+	case vk::DebugUtilsMessageSeverityFlagBitsEXT::eError:
+		std::cerr << message << std::endl;
+		break;
+	case vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning:
+	case vk::DebugUtilsMessageSeverityFlagBitsEXT::eInfo:
+	case vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose:
+		std::cout << message << std::endl;
+		break;
+	}
+
+	return VK_FALSE;
+}

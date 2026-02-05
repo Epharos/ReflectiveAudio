@@ -7,6 +7,7 @@ auto main() -> int
 
 	VulkanContext context;
 	context.CreateInstance();
+	context.CreateDebugMessenger();
 	context.CreatePhysicalDevice();
 	context.CreateQueues();
 	context.CreateDevice();

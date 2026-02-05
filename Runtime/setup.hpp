@@ -45,8 +45,19 @@ struct VulkanContext
 	QueueFamilyIndices queueFamilyIndices;
 	vk::Device device;
 
+	vk::detail::DispatchLoaderDynamic dynamicLoader;
+	vk::DebugUtilsMessengerEXT debugMessenger;
+
 	auto CreateInstance() -> void;
 	auto CreatePhysicalDevice() -> void;
 	auto CreateQueues() -> void;
 	auto CreateDevice() -> void;
+
+	auto CreateDebugMessenger() -> void;
+	
+	static VKAPI_ATTR vk::Bool32 VKAPI_PTR DebugLayerCallback(
+					vk::DebugUtilsMessageSeverityFlagBitsEXT _messageSeverity,
+					vk::DebugUtilsMessageTypeFlagsEXT _messageType,
+					const vk::DebugUtilsMessengerCallbackDataEXT* _callbackData,
+					void* _userData);
 };
