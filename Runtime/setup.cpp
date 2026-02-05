@@ -195,7 +195,24 @@ auto VulkanContext::CreateDevice() -> void
 		return;
 	}
 
-	std::cout << "Created device" << std::endl;
+	std::cout << "Succesfully created Device" << std::endl;
+}
+
+auto VulkanContext::CreateCommandPool() -> void
+{
+		vk::CommandPoolCreateInfo poolInfo;
+		poolInfo.setFlags(vk::CommandPoolCreateFlags() | vk::CommandPoolCreateFlagBits::eResetCommandBuffer);
+		poolInfo.setQueueFamilyIndex(*queueFamilyIndices.graphicsFamily);
+
+		commandPool = device.createCommandPool(poolInfo);
+
+		if(commandPool == VK_NULL_HANDLE)
+		{
+				std::cerr << "Could not create Command Pool" << std::endl;
+				return;
+		}
+
+		std::cout << "Sucessfully created Command Pool" << std::endl;
 }
 
 auto VulkanContext::CreateDebugMessenger() -> void

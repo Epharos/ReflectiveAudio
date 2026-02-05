@@ -44,6 +44,7 @@ struct VulkanContext
 	vk::PhysicalDevice physicalDevice;
 	QueueFamilyIndices queueFamilyIndices;
 	vk::Device device;
+	vk::CommandPool commandPool;
 
 	vk::detail::DispatchLoaderDynamic dynamicLoader;
 	vk::DebugUtilsMessengerEXT debugMessenger;
@@ -54,6 +55,8 @@ struct VulkanContext
 	auto CreateDevice() -> void;
 
 	auto CreateDebugMessenger() -> void;
+
+	auto CreateCommandPool() -> void;
 	
 	static VKAPI_ATTR vk::Bool32 VKAPI_PTR DebugLayerCallback(
 					vk::DebugUtilsMessageSeverityFlagBitsEXT _messageSeverity,
