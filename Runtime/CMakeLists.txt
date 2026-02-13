@@ -1,6 +1,8 @@
 add_executable(Runtime
 	"main.cpp"
 	"setup.cpp"
+	"window.cpp"
+	"frame.cpp"
 )
 
 target_include_directories(Runtime

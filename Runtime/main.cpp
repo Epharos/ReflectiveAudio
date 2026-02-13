@@ -1,5 +1,8 @@
 #include <iostream>
+#include "frame.hpp"
 #include "setup.hpp"
+#include "vulkan/vulkan.hpp"
+#include "window.hpp"
 
 auto main() -> int
 {
@@ -15,5 +18,15 @@ auto main() -> int
 	context.CreateDevice();
 
 	context.CreateCommandPool();
+
+	Window window{context, vk::Extent2D{720, 480}};
+
+	Frame frame{context, window};
+
+	frame.CreateSurface();
+
+	while(!window.ShouldClose())
+		window.PollEvents();
+
 	return 0;
 }
