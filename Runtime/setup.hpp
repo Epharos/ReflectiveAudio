@@ -1,10 +1,11 @@
 #pragma once
 
+#include "vulkan/vulkan.hpp"
 #include <vulkan/vulkan.hpp>
-#include <iostream>
 #include <optional>
-#include <vector>
-#include <format>
+#include <memory>
+
+class FrameContext; // Forward declaration
 
 struct QueueFamilyIndices
 {
@@ -48,6 +49,8 @@ struct VulkanContext
 
 	vk::detail::DispatchLoaderDynamic dynamicLoader;
 	vk::DebugUtilsMessengerEXT debugMessenger;
+
+	std::unique_ptr<FrameContext> frameContext;
 
 	auto CreateInstance() -> void;
 	auto CreatePhysicalDevice() -> void;

@@ -2,6 +2,7 @@
 #include "GLFW/glfw3.h"
 #include "setup.hpp"
 #include "vulkan/vulkan.hpp"
+#include <iostream>
 #include <stdexcept>
 
 Window::Window(const VulkanContext& _context, vk::Extent2D _extent)

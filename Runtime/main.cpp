@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "frame.hpp"
 #include "setup.hpp"
 #include "vulkan/vulkan.hpp"
@@ -21,9 +22,11 @@ auto main() -> int
 
 	Window window{context, vk::Extent2D{720, 480}};
 
-	Frame frame{context, window};
+	context.frameContext = std::make_unique<FrameContext>(context, window);
+	FrameContext& frame = *context.frameContext;
 
 	frame.CreateSurface();
+	frame.CreateSwapchain();
 
 	while(!window.ShouldClose())
 		window.PollEvents();

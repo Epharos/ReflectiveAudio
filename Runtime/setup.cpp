@@ -1,4 +1,5 @@
 #include "setup.hpp"
+#include <iostream>
 #include <algorithm>
 
 auto VulkanContext::CreateInstance() -> void
